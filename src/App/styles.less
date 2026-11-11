@@ -9,6 +9,22 @@
 }
 
 @font-face {
+    font-family: 'Inter';
+    src: url('/assets/fonts/InterVariable.woff2') format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BebasNeue';
+    src: url('/assets/fonts/BebasNeue-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
     font-family: 'TwemojiFlags';
     src: url('/assets/fonts/TwemojiFlags.woff2') format('woff2');
     unicode-range: U+1F1E6-1F1FF;
@@ -48,9 +64,12 @@
     --landscape-shape-ratio: 0.5625;
     --poster-shape-ratio: 1.464;
     --scroll-bar-size: 6px;
-    --horizontal-nav-bar-size: 5.5rem;
+    --horizontal-nav-bar-size: 4.25rem;
     --vertical-nav-bar-size: 6rem;
     --focus-outline-size: 2px;
+    --netflix-red: #e50914;
+    --surface-elevated: #181818;
+    --text-muted: #b3b3b3;
     --color-facebook: #1877F1;
     --color-x: #000000;
     --color-reddit: #FF4500;
@@ -59,20 +78,20 @@
     --color-placeholder: #60606080;
     --color-placeholder-text: @color-surface-50;
     --color-placeholder-background: @color-surface-dark5-20;
-    --primary-background-color: rgba(12, 11, 17, 1);
-    --secondary-background-color: rgba(26, 23, 62, 1);
-    --primary-foreground-color: rgba(255, 255, 255, 0.9);
-    --secondary-foreground-color: rgb(12, 11, 17, 1);
-    --primary-accent-color: rgb(123, 91, 245);
-    --secondary-accent-color: rgba(34, 179, 101, 1);
+    --primary-background-color: #141414;
+    --secondary-background-color: #141414;
+    --primary-foreground-color: #ffffff;
+    --secondary-foreground-color: #000000;
+    --primary-accent-color: #e50914;
+    --secondary-accent-color: #e50914;
     --tertiary-accent-color: rgba(246, 199, 0, 1);
     --quaternary-accent-color: rgba(18, 69, 166, 1);
-    --overlay-color: rgba(255, 255, 255, 0.05);
-    --modal-background-color: rgba(15, 13, 32, 1);
-    --outer-glow: 0px 0px 15px rgba(123, 91, 245, 0.37);
-    --warning-accent-color: rgba(255, 165, 0, 1);
-    --danger-accent-color: rgba(220, 38, 38, 1);  
-    --border-radius: 0.75rem;
+    --overlay-color: rgba(255, 255, 255, 0.08);
+    --modal-background-color: #181818;
+    --outer-glow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    --warning-accent-color: #e87c03;
+    --danger-accent-color: #e50914;
+    --border-radius: 0.25rem;
     --top-overlay-size: @top-overlay-size;
     --bottom-overlay-size: @bottom-overlay-size;
     --overlap-size: @overlap-size;
@@ -164,7 +183,7 @@ html {
     zoom: var(--interface-scale);
     width: @html-width;
     height: @html-height;
-    font-family: 'PlusJakartaSans', 'Arial', 'Helvetica', 'TwemojiFlags', 'sans-serif';
+    font-family: 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'TwemojiFlags', 'sans-serif';
     color: var(--primary-foreground-color);
     overflow: auto;
     overscroll-behavior: none;
@@ -182,7 +201,7 @@ html {
     body {
         width: 100%;
         height: 100%;
-        background: linear-gradient(41deg, var(--primary-background-color) 0%, var(--secondary-background-color) 100%);
+        background: var(--primary-background-color);
         -webkit-font-smoothing: antialiased;
 
         :global(#app) {

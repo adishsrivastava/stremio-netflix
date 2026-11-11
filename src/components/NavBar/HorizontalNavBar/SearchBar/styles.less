@@ -3,14 +3,22 @@
 @import (reference) '~@stremio/stremio-colors/less/stremio-colors.less';
 
 .search-bar-container {
-    --search-bar-size: 3.25rem;
+    --search-bar-size: 2.7rem;
     display: flex;
     flex-direction: row;
     height: var(--search-bar-size);
-    border-radius: var(--search-bar-size);
-    background-color: var(--overlay-color);
+    border-radius: 0.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background-color: rgba(0, 0, 0, 0.62);
     position: relative;
     overflow: visible;
+    transition: border-color 120ms ease-out, background-color 120ms ease-out;
+
+    &:focus-within,
+    &:global(.active) {
+        border-color: rgba(255, 255, 255, 0.85);
+        background-color: rgba(0, 0, 0, 0.82);
+    }
 
     .search-input {
         flex: 1;
@@ -18,14 +26,14 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        padding: 0 0.5rem 0 2rem;
-        font-weight: 500;
+        padding: 0 0.5rem 0 1rem;
+        font-weight: 400;
         cursor: text;
 
         &::placeholder, .placeholder-label {
             max-height: 1.2em;
             opacity: 1;
-            opacity: 0.6;
+            opacity: 0.65;
         }
     }
 
@@ -36,13 +44,13 @@
         justify-content: center;
         align-items: center;
         height: var(--search-bar-size);
-        padding: 0 1.5rem;
+        padding: 0 1rem;
 
         .icon {
             flex: none;
-            width: 1.7rem;
-            height: 1.7rem;
-            opacity: 0.6;
+            width: 1.5rem;
+            height: 1.5rem;
+            opacity: 0.75;
         }
     }
 

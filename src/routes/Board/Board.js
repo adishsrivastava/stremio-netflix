@@ -6,6 +6,7 @@ const useTranslate = require('stremio/common/useTranslate');
 const { default: useVisibleCatalogs } = require('stremio/common/useVisibleCatalogs');
 const { useStreamingServer, useNotifications, withCoreSuspender, useProfile } = require('stremio/common');
 const { ContinueWatchingItem, EventModal, LiveTvContinueWatchingItem, MainNavBars, MetaItem, MetaRow } = require('stremio/components');
+const BoardHero = require('./BoardHero/BoardHero');
 const useBoard = require('./useBoard');
 const useContinueWatchingPreview = require('./useContinueWatchingPreview');
 const { default: useLiveTvContinueWatching } = require('./useLiveTvContinueWatching');
@@ -26,7 +27,32 @@ const Board = () => {
         items: (Array.isArray(liveTvContinueWatching.items) ? liveTvContinueWatching.items : [])
             .map((item) => ({ ...item, posterShape: 'landscape' })),
     }), [liveTvContinueWatching.items]);
+    const heroItem = React.useMemo(() => {
+        if (!Array.isArray(board.catalogs)) {
+            return null;
+        }
+
+        for (const catalog of board.catalogs) {
+            if (catalog?.content?.type !== 'Ready' || !Array.isArray(catalog.content.content)) {
+                continue;
+            }
+
+            const candidates = catalog.content.content.filter((item) => (
+                typeof item?.name === 'string' &&
+                item.name.length > 0 &&
+                typeof item.background === 'string' &&
+                item.background.length > 0
+            ));
+
+            if (candidates.length > 0) {
+                return candidates.find((item) => typeof item.logo === 'string' && item.logo.length > 0) ?? candidates[0];
+            }
+        }
+
+        return null;
+    }, [board.catalogs]);
     const boardCatalogsOffset =
+        (heroItem !== null ? 1 : 0) +
         (continueWatchingPreview.items.length > 0 ? 1 : 0) +
         (liveTvCatalog.items.length > 0 ? 1 : 0);
     const showStreamingServerWarning = React.useMemo(() => {
@@ -45,6 +71,12 @@ const Board = () => {
             <EventModal />
             <MainNavBars className={styles['board-content-container']} route={'board'}>
                 <div ref={scrollContainerRef} className={styles['board-content']} onScroll={onScroll}>
+                    {
+                        heroItem !== null ?
+                            <BoardHero className={styles['board-hero']} metaItem={heroItem} />
+                            :
+                            null
+                    }
                     {
                         continueWatchingPreview.items.length > 0 ?
                             <MetaRow

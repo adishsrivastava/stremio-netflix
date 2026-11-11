@@ -7,13 +7,15 @@ import { useContentGamepadNavigation, useVerticalNavGamepadNavigation } from 'st
 import styles from './MainNavBars.less';
 
 const TABS = [
-    { id: 'board', label: 'Board', icon: 'home', href: '/' },
+    { id: 'board', label: 'Home', icon: 'home', href: '/' },
     { id: 'discover', label: 'Discover', icon: 'discover', href: '/discover' },
-    { id: 'library', label: 'Library', icon: 'library', href: '/library' },
+    { id: 'library', label: 'My List', icon: 'library', href: '/library' },
     { id: 'calendar', label: 'Calendar', icon: 'calendar', href: '/calendar' },
     { id: 'addons', label: 'ADDONS', icon: 'addons', href: '/addons' },
     { id: 'settings', label: 'SETTINGS', icon: 'settings', href: '/settings' },
 ];
+
+const HORIZONTAL_TABS = TABS.filter((tab) => tab.id !== 'settings');
 
 type Props = {
     className: string,
@@ -40,6 +42,7 @@ const MainNavBars = memo(({ className, route, query, children }: Props) => {
                 searchBar={true}
                 fullscreenButton={true}
                 navMenu={true}
+                tabs={HORIZONTAL_TABS}
             />
             <VerticalNavBar
                 ref={navRef}

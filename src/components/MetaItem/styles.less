@@ -25,8 +25,6 @@
         transition: background-color 100ms ease-out;
 
         .poster-container {
-            box-shadow: 0 0 0 0.2rem var(--primary-foreground-color);
-
             .dismiss-icon-layer {
                 opacity: 1;
                 pointer-events: auto;
@@ -50,6 +48,18 @@
 
         .menu-label-container {
             opacity: 1;
+        }
+    }
+
+    &:global(.hovered) {
+        .poster-container {
+            box-shadow: 0 0.75rem 1.75rem rgba(0, 0, 0, 0.65);
+        }
+    }
+
+    &:focus-within, &:global(.active), &:global(.selected) {
+        .poster-container {
+            box-shadow: 0 0 0 0.2rem var(--primary-foreground-color);
         }
     }
 
@@ -99,7 +109,7 @@
         z-index: 0;
         background-color: var(--overlay-color);
         border-radius: var(--border-radius);
-        transition: scale 100ms ease-out;
+        transition: scale 100ms ease-out, box-shadow 150ms ease-out;
 
         &:global(.poster-change-cursor) {
             .poster-image-layer {
@@ -184,7 +194,7 @@
                 height: 100%;
                 object-position: center;
                 object-fit: cover;
-                opacity: 0.9;
+                opacity: 1;
                 overflow-clip-margin: unset;
             }
 

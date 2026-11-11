@@ -37,6 +37,20 @@
     }
 }
 
+// On desktop the top navigation carries the primary tabs Netflix-style,
+// so the left rail is only kept as navigation on tablet widths.
+@media only screen and (min-width: 1001px) {
+    .main-nav-bars-container {
+        .vertical-nav-bar {
+            display: none;
+        }
+
+        .nav-content-container {
+            left: 0;
+        }
+    }
+}
+
 @media only screen and (max-width: @minimum) {
     .main-nav-bars-container {
         .nav-content-container {

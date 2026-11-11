@@ -2,6 +2,7 @@
 
 const React = require('react');
 const { useGoBack } = require('stremio-router');
+const { Link } = require('react-router-dom');
 const PropTypes = require('prop-types');
 const classnames = require('classnames');
 const { default: Icon } = require('@stremio/stremio-icons/react');
@@ -13,7 +14,9 @@ const NavMenu = require('./NavMenu');
 const styles = require('./styles');
 const { t } = require('i18next');
 
-const HorizontalNavBar = React.memo(({ className, route, query, title, backButton, searchBar, fullscreenButton, navMenu, originPath, hdrInfo, ...props }) => {
+const BRAND_NAME = 'STREMIO';
+
+const HorizontalNavBar = React.memo(({ className, route, query, title, backButton, searchBar, fullscreenButton, navMenu, originPath, hdrInfo, tabs, ...props }) => {
     const backButtonOnClick = useGoBack(originPath);
     const [fullscreen, requestFullscreen, exitFullscreen, , supported] = useFullscreen();
     const renderNavMenuLabel = React.useCallback(({ ref, className, onClick, children, }) => (
@@ -31,13 +34,31 @@ const HorizontalNavBar = React.memo(({ className, route, query, title, backButto
                         <Icon className={styles['icon']} name={'chevron-back'} />
                     </Button>
                     :
-                    <div className={styles['logo-container']}>
+                    <Link className={styles['logo-container']} to={'/'} tabIndex={-1} aria-label={'Stremio'}>
                         <Image
                             className={styles['logo']}
                             src={require('/assets/images/stremio_symbol.png')}
                             alt={' '}
                         />
+                        <div className={styles['logo-wordmark']}>{BRAND_NAME}</div>
+                    </Link>
+            }
+            {
+                Array.isArray(tabs) && tabs.length > 0 && !backButton ?
+                    <div className={styles['nav-tabs']}>
+                        {tabs.map((tab, index) => (
+                            <Link
+                                key={index}
+                                className={classnames(styles['nav-tab'], { 'active': tab.id === route })}
+                                to={tab.href}
+                                tabIndex={-1}
+                            >
+                                {t(tab.label)}
+                            </Link>
+                        ))}
                     </div>
+                    :
+                    null
             }
             {
                 typeof title === 'string' && title.length > 0 ?
@@ -91,6 +112,11 @@ HorizontalNavBar.propTypes = {
     fullscreenButton: PropTypes.bool,
     navMenu: PropTypes.bool,
     originPath: PropTypes.string,
+    tabs: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string,
+        label: PropTypes.string,
+        href: PropTypes.string,
+    })),
     hdrInfo: PropTypes.shape({
         gamma: PropTypes.string,
     }),
