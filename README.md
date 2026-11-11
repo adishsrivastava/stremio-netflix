@@ -6,9 +6,8 @@
 
 [![Build](https://github.com/adishsrivastava/stremio-netflix/actions/workflows/build.yml/badge.svg?branch=development)](https://github.com/adishsrivastava/stremio-netflix/actions/workflows/build.yml)
 [![License: GPL-2.0](https://img.shields.io/badge/license-GPL--2.0-e50914)](LICENSE.md)
-[![Open the preview](https://img.shields.io/badge/open-hosted_preview-e50914)](https://adishsrivastava.github.io/stremio-netflix/development/)
 
-[Hosted preview](https://adishsrivastava.github.io/stremio-netflix/development/) · [Report an issue](https://github.com/adishsrivastava/stremio-netflix/issues) · [Upstream Stremio Web](https://github.com/Stremio/stremio-web)
+[Report an issue](https://github.com/adishsrivastava/stremio-netflix/issues) · [Upstream Stremio Web](https://github.com/Stremio/stremio-web)
 
 </div>
 
@@ -27,7 +26,7 @@ This fork restyles the Stremio Web client with a Netflix-like dark interface: a 
 - [What is Stremio?](#what-is-stremio)
 - [What is Torrentio?](#what-is-torrentio)
 - [How Stremio and Torrentio work together](#how-stremio-and-torrentio-work-together)
-- [Use the hosted preview](#use-the-hosted-preview)
+- [Deploy a hosted preview](#deploy-a-hosted-preview)
 - [Run it locally](#run-it-locally)
 - [Install Torrentio](#install-torrentio)
 - [Playback and the streaming server](#playback-and-the-streaming-server)
@@ -60,13 +59,27 @@ Torrentio is not bundled with this project and is not operated by Stremio or by 
 
 There is one important browser detail: a web page cannot download a torrent by itself. For **torrent** streams, Stremio Web needs a **streaming server** running on your machine (the Stremio desktop app and Stremio Service provide one). The server downloads the torrent and serves it to the player over HTTP. **Debrid/direct HTTP streams** generally play without that server.
 
-## Use the hosted preview
+## Deploy a hosted preview
 
-The `development` branch is built and published automatically:
+GitHub Pages hosting is not enabled automatically on a fresh fork. To publish this build:
 
-**https://adishsrivastava.github.io/stremio-netflix/development/**
+1. In the repository, open **Settings → Actions → General** and allow workflows to run.
+2. Open **Settings → Pages → Build and deployment** and set **Source** to **GitHub Actions**.
+3. Push to `development`, or open a pull request from a feature branch to `development`.
 
-Open the link, sign in or use guest mode, then install Torrentio as described below. The hosted build is served over HTTPS; see [Playback and the streaming server](#playback-and-the-streaming-server) for browser limitations when connecting to a local torrent server.
+The **Build** workflow publishes the generated app to the `gh-pages` branch under the source branch name, and the **Publish GitHub Pages** workflow deploys it. The resulting URL follows this pattern:
+
+```text
+https://<owner>.github.io/stremio-netflix/<branch>/
+```
+
+For this repository's `development` branch that is:
+
+```text
+https://adishsrivastava.github.io/stremio-netflix/development/
+```
+
+Once deployed, open the link, sign in or use guest mode, then install Torrentio as described below. A deployed build is served over HTTPS; see [Playback and the streaming server](#playback-and-the-streaming-server) for browser limitations when connecting to a local torrent server.
 
 ## Run it locally
 
@@ -144,7 +157,7 @@ Browser rules matter here:
 
 The web client is a PWA and can be installed like a native app:
 
-- **Chrome / Edge (desktop):** open the preview or your local build, then use the install icon in the address bar or **Menu → Install Stremio Web**.
+- **Chrome / Edge (desktop):** open your deployed preview or local build, then use the install icon in the address bar or **Menu → Install Stremio Web**.
 - **Android (Chrome):** **Menu → Add to Home screen → Install**.
 - **iPhone / iPad (Safari):** **Share → Add to Home Screen**.
 
@@ -180,16 +193,10 @@ The project uses webpack, React, LESS, and TypeScript for selected components. S
 
 GitHub Actions workflows are included:
 
-- **Build** (`.github/workflows/build.yml`) runs install, build, test, and lint on pushes and pull requests to `development`, then publishes a preview from `build/` to the `gh-pages` branch under the branch name.
+- **Build** (`.github/workflows/build.yml`) runs install, build, test, and lint on pushes and pull requests to `development`, then publishes a preview from `build/` to the `gh-pages` branch under the source branch name.
 - **Publish GitHub Pages** (`.github/workflows/pages.yml`) deploys the accumulated `gh-pages` content.
 
-To publish from your own fork, enable **Settings → Pages → Build and deployment → Source: GitHub Actions**. The preview for this branch is served at:
-
-```text
-https://<your-user>.github.io/stremio-netflix/development/
-```
-
-The production build uses relative asset paths, so it also works when hosted under a subpath.
+The workflows require one-time repository setup as described in [Deploy a hosted preview](#deploy-a-hosted-preview). The production build uses relative asset paths, so it also works when hosted under a subpath.
 
 ## Troubleshooting
 
